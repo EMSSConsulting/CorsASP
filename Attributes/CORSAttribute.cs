@@ -58,7 +58,7 @@ namespace AntennaPortal.Middleware
                     context.Response.Headers.Set(AllowCredentialsHeader, "true");
 
                 context.Response.Headers.Set(AllowHeadersHeader, AllowHeaders ?? context.Request.Headers.Get(RequestHeadersHeader) ?? "*");
-                context.Response.Headers.Set(AllowMethodsHeader, AllowMethods?.Aggregate((x, y) => x + ", " + y) ?? context.Request.Headers.Get(RequestMethodHeader) ?? "*");
+                context.Response.Headers.Set(AllowMethodsHeader, AllowMethods?.Union(new[] { "OPTIONS" }).Aggregate((x, y) => x + ", " + y) ?? context.Request.Headers.Get(RequestMethodHeader) ?? "*");
             }
         }
     }
